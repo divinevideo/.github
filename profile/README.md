@@ -1,12 +1,12 @@
-# diVine
+# Divine
 
 **Short-form looping video on the decentralized web**
 
-diVine is an open-source platform for sharing 6-second looping videos, built on [Nostr](https://nostr.com) - a decentralized social protocol. Think Vine, but nobody owns it and nobody can shut it down.
+Divine is an open-source platform for sharing 6-second looping videos, built on [Nostr](https://nostr.com) - a decentralized social protocol. Think Vine, but nobody owns it and nobody can shut it down.
 
 ## What We're Building
 
-diVine brings back the magic of short-form looping video in a way that's:
+Divine brings back the magic of short-form looping video in a way that's:
 - **Decentralized** - No single company controls your content or social graph
 - **Open Source** - All our code is public and contributions are welcome
 - **Interoperable** - Your videos and followers work across any Nostr client
@@ -33,13 +33,13 @@ diVine brings back the magic of short-form looping video in a way that's:
 
 ### Nostr Protocol
 
-[Nostr](https://github.com/nostr-protocol/nostr) (Notes and Other Stuff Transmitted by Relays) is a simple, open protocol for decentralized social networking. Here's how diVine uses it:
+[Nostr](https://github.com/nostr-protocol/nostr) (Notes and Other Stuff Transmitted by Relays) is a simple, open protocol for decentralized social networking. Here's how Divine uses it:
 
 - **Identity**: Users have a cryptographic keypair. Your public key is your identity, and you sign all your content with your private key. No email, no phone number, no company owns your account.
 
 - **Content**: Videos are published as Nostr events (kind 34236) containing metadata and links to the actual video files. These events are signed and can be verified by anyone.
 
-- **Social Graph**: Follows, likes, reposts, and comments are all Nostr events. Your social connections aren't locked into diVine - they work across the entire Nostr ecosystem.
+- **Social Graph**: Follows, likes, reposts, and comments are all Nostr events. Your social connections aren't locked into Divine - they work across the entire Nostr ecosystem.
 
 - **Relays**: Content is stored on relays - servers that accept and serve Nostr events. You can use any relay, run your own, or use multiple for redundancy.
 
@@ -90,8 +90,8 @@ flutter run
 
 ## License
 
-All diVine repositories are open source. Check individual repositories for specific license information.
+All Divine repositories are open source. Check individual repositories for specific license information.
 
 ---
 
-*diVine is part of the broader movement to build a more open, decentralized internet. We believe social media should be a protocol, not a platform.*
+*Divine is part of the broader movement to build a more open, decentralized internet. We believe social media should be a protocol, not a platform.*
