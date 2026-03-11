@@ -20,7 +20,13 @@ cleanup() {
 
 trap cleanup EXIT
 
-git fetch "$base_remote" "$base_ref" --no-tags --depth=1 >/dev/null 2>&1
+# Merge-base detection fails on shallow clones because Git cannot see the shared
+# ancestor between the PR head and the base branch.
+if [[ "$(git rev-parse --is-shallow-repository)" == "true" ]]; then
+  git fetch --unshallow origin >/dev/null 2>&1 || git fetch origin --depth=2147483647 >/dev/null 2>&1
+fi
+
+git fetch "$base_remote" "$base_ref" --no-tags >/dev/null 2>&1
 git checkout --quiet --detach FETCH_HEAD
 
 set +e
