@@ -19,6 +19,10 @@ on:
         description: Head commit SHA for the pull request
         required: true
         type: string
+      workflow-repository-ref:
+        description: Ref for the divinevideo/.github repository that contains helper scripts
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -39,5 +43,13 @@ jobs:
       - name: Add base repository remote
         run: git remote add base "https://github.com/${{ inputs.base-repository }}.git"
 
+      - name: Checkout workflow helpers
+        uses: actions/checkout@v4
+        with:
+          repository: divinevideo/.github
+          ref: ${{ inputs.workflow-repository-ref }}
+          path: .workflow-support
+          fetch-depth: 1
+
       - name: Verify mergeability
-        run: ./scripts/check_mergeability.sh base "${{ inputs.base-ref }}" "${{ inputs.head-sha }}"
+        run: ./.workflow-support/scripts/check_mergeability.sh base "${{ inputs.base-ref }}" "${{ inputs.head-sha }}"
