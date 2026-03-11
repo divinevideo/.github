@@ -1,0 +1,43 @@
+name: Reusable Mergeability Check
+
+on:
+  workflow_call:
+    inputs:
+      base-ref:
+        description: Base branch ref to merge into
+        required: true
+        type: string
+      base-repository:
+        description: Base repository in owner/name form
+        required: true
+        type: string
+      head-repository:
+        description: Head repository in owner/name form
+        required: true
+        type: string
+      head-sha:
+        description: Head commit SHA for the pull request
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  mergeability:
+    name: mergeability
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout pull request head
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.head-repository }}
+          ref: ${{ inputs.head-sha }}
+          fetch-depth: 1
+
+      - name: Add base repository remote
+        run: git remote add base "https://github.com/${{ inputs.base-repository }}.git"
+
+      - name: Verify mergeability
+        run: ./scripts/check_mergeability.sh base "${{ inputs.base-ref }}" "${{ inputs.head-sha }}"
