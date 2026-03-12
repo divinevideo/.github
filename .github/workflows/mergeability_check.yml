@@ -1,0 +1,61 @@
+name: Reusable Mergeability Check
+
+on:
+  workflow_call:
+    inputs:
+      pull-number:
+        description: Pull request number to inspect
+        required: true
+        type: number
+      repository:
+        description: Repository in owner/name form
+        required: true
+        type: string
+      base-ref:
+        description: Base branch ref for failure messaging
+        required: true
+        type: string
+
+permissions:
+  pull-requests: read
+  contents: read
+
+jobs:
+  mergeability:
+    name: mergeability
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Verify pull request mergeability
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const [owner, repo] = '${{ inputs.repository }}'.split('/');
+            const pullNumber = Number('${{ inputs.pull-number }}');
+            const baseRef = '${{ inputs.base-ref }}';
+
+            const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+            for (let attempt = 1; attempt <= 10; attempt += 1) {
+              const { data } = await github.rest.pulls.get({
+                owner,
+                repo,
+                pull_number: pullNumber,
+              });
+
+              if (data.mergeable === null) {
+                core.info(`Mergeability still computing (attempt ${attempt}/10); waiting 3s.`);
+                await sleep(3000);
+                continue;
+              }
+
+              core.info(`mergeable=${data.mergeable} mergeable_state=${data.mergeable_state}`);
+
+              if (!data.mergeable) {
+                core.setFailed(`PR #${pullNumber} cannot be cleanly merged into ${baseRef}. mergeable_state=${data.mergeable_state}`);
+              }
+
+              return;
+            }
+
+            core.setFailed(`GitHub did not finish computing mergeability for PR #${pullNumber} after 10 attempts.`);
