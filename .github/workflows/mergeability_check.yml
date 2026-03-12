@@ -3,28 +3,21 @@ name: Reusable Mergeability Check
 on:
   workflow_call:
     inputs:
+      pull-number:
+        description: Pull request number to inspect
+        required: true
+        type: number
+      repository:
+        description: Repository in owner/name form
+        required: true
+        type: string
       base-ref:
-        description: Base branch ref to merge into
-        required: true
-        type: string
-      base-repository:
-        description: Base repository in owner/name form
-        required: true
-        type: string
-      head-repository:
-        description: Head repository in owner/name form
-        required: true
-        type: string
-      head-sha:
-        description: Head commit SHA for the pull request
-        required: true
-        type: string
-      workflow-repository-ref:
-        description: Ref for the divinevideo/.github repository that contains helper scripts
+        description: Base branch ref for failure messaging
         required: true
         type: string
 
 permissions:
+  pull-requests: read
   contents: read
 
 jobs:
@@ -33,23 +26,36 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout pull request head
-        uses: actions/checkout@v4
+      - name: Verify pull request mergeability
+        uses: actions/github-script@v7
         with:
-          repository: ${{ inputs.head-repository }}
-          ref: ${{ inputs.head-sha }}
-          fetch-depth: 1
+          script: |
+            const [owner, repo] = '${{ inputs.repository }}'.split('/');
+            const pullNumber = Number('${{ inputs.pull-number }}');
+            const baseRef = '${{ inputs.base-ref }}';
 
-      - name: Add base repository remote
-        run: git remote add base "https://github.com/${{ inputs.base-repository }}.git"
+            const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-      - name: Checkout workflow helpers
-        uses: actions/checkout@v4
-        with:
-          repository: divinevideo/.github
-          ref: ${{ inputs.workflow-repository-ref }}
-          path: .workflow-support
-          fetch-depth: 1
+            for (let attempt = 1; attempt <= 10; attempt += 1) {
+              const { data } = await github.rest.pulls.get({
+                owner,
+                repo,
+                pull_number: pullNumber,
+              });
 
-      - name: Verify mergeability
-        run: ./.workflow-support/scripts/check_mergeability.sh base "${{ inputs.base-ref }}" "${{ inputs.head-sha }}"
+              if (data.mergeable === null) {
+                core.info(`Mergeability still computing (attempt ${attempt}/10); waiting 3s.`);
+                await sleep(3000);
+                continue;
+              }
+
+              core.info(`mergeable=${data.mergeable} mergeable_state=${data.mergeable_state}`);
+
+              if (!data.mergeable) {
+                core.setFailed(`PR #${pullNumber} cannot be cleanly merged into ${baseRef}. mergeable_state=${data.mergeable_state}`);
+              }
+
+              return;
+            }
+
+            core.setFailed(`GitHub did not finish computing mergeability for PR #${pullNumber} after 10 attempts.`);
