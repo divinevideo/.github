@@ -123,10 +123,29 @@ test_clean_merge_passes_with_shallow_checkout() {
   assert_contains "$output" "can be cleanly merged"
 }
 
+test_clean_merge_passes_without_git_identity() {
+  local empty_home output clean_clone
+  load_repo_info clean
+  empty_home="$(mktemp -d)"
+  clean_clone="$(dirname "$REPO_DIR")/identity-check"
+
+  git clone --branch feature "file://$REMOTE_REPO" "$clean_clone" >/dev/null 2>&1
+  git -C "$clean_clone" checkout --quiet "$HEAD_SHA"
+
+  output="$(
+    cd "$clean_clone" &&
+      env -i PATH="$PATH" HOME="$empty_home" GIT_CONFIG_GLOBAL=/dev/null \
+        "$SCRIPT_PATH" origin main "$HEAD_SHA"
+  )" || fail "expected clean merge check to pass without git identity"
+
+  assert_contains "$output" "can be cleanly merged"
+}
+
 main() {
   test_clean_merge_passes
   test_conflicting_merge_fails
   test_clean_merge_passes_with_shallow_checkout
+  test_clean_merge_passes_without_git_identity
   echo "PASS: check_mergeability_test"
 }
 

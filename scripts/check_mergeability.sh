@@ -28,6 +28,8 @@ fi
 
 git fetch "$base_remote" "$base_ref" --no-tags >/dev/null 2>&1
 git checkout --quiet --detach FETCH_HEAD
+git config user.name "github-actions[bot]"
+git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
 set +e
 merge_output="$(git merge --no-commit --no-ff "$head_sha" 2>&1)"
