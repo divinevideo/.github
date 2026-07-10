@@ -1,60 +1,67 @@
 # Divine
 
-**Short-form looping video on the decentralized web**
+**Welcome Home.**
 
-Divine is an open-source platform for sharing 6-second looping videos, built on [Nostr](https://nostr.com) — a decentralized social protocol. Think Vine, but nobody owns it and nobody can shut it down.
+Divine is bringing back the six-second videos that shaped internet culture — on a new protocol where creators own what they make and everyone has more say over their feeds. It's your playground for human creativity and connection, in all its weird, wonderful, technicolor glory.
 
-## What We're Building
+We've brought 100,000+ Vines back to life from the original archives, and we're building the place where the next ones get made. No algorithms deciding what you see. No AI slop. Just quick bursts of real human creativity.
 
-Divine brings back the magic of short-form looping video in a way that's:
-- **Decentralized** — No single company controls your content or social graph
-- **Open Source** — All our code is public and contributions are welcome
-- **Interoperable** — Your videos and followers work across any Nostr client
-- **Censorship Resistant** — Content lives on multiple relays, not one server
+## What We Stand For
 
-## Architecture
+- **No slop. All human.** Our systems are designed to catch and remove machine-generated content, and our community flags what slips through. We might not catch it all, but we're committed to keeping Divine as human-only as possible.
+- **Own what you make. Choose what you see.** Divine is built on [Nostr](https://nostr.com), a decentralized social protocol. Your identity, your content, and your followers are yours — they work across the whole Nostr ecosystem, not just our apps.
+- **Joy scrolling > doom scrolling.** Feeds shaped by your curiosity, not an ad-driven black box. We're building "choose your experience" algorithms so your feed works for you.
+- **Community-built.** Everything here is open source. We're a band of thoughtful rascals building this with and for the community — and we'd love your help.
 
-### Frontend Applications
+## The Code
+
+Everything below is open source and open to contributions.
+
+### Apps
 
 | Repository | Stack | Description |
 |------------|-------|-------------|
-| [divine-web](https://github.com/divinevideo/divine-web) | React + TypeScript + Vite | Web app at [divine.video](https://divine.video) |
+| [divine-web](https://github.com/divinevideo/divine-web) | React + TypeScript + Vite | The Divine web app at [divine.video](https://divine.video) |
 | [divine-mobile](https://github.com/divinevideo/divine-mobile) | Flutter | Native iOS and Android apps |
 | [divine-space](https://github.com/divinevideo/divine-space) | React + TypeScript + Vite | MySpace-inspired video social network on Nostr |
 | [divine-relay-manager](https://github.com/divinevideo/divine-relay-manager) | React + TypeScript + Vite | Nostr relay management dashboard |
 
-### Core Backend Services
+### Core Services
 
 | Repository | Stack | Description |
 |------------|-------|-------------|
-| [divine-funnelcake](https://github.com/divinevideo/divine-funnelcake) | Rust / Axum | Nostr relay + REST API + ClickHouse analytics ([relay.divine.video](https://relay.divine.video) / [api.divine.video](https://api.divine.video)) |
 | [keycast](https://github.com/divinevideo/keycast) | Rust / Axum | OAuth 2.0 + NIP-46 remote signing + UCAN tokens ([login.divine.video](https://login.divine.video)) |
-| [divine-blossom](https://github.com/divinevideo/divine-blossom) | Rust / Fastly Compute | Content-addressed media storage via Blossom protocol ([media.divine.video](https://media.divine.video)) |
-| [divine-inquisitor](https://github.com/divinevideo/divine-inquisitor) | Rust / Axum | C2PA Content Credentials verification service |
+| [divine-login](https://github.com/divinevideo/divine-login) | TypeScript | OAuth client for Keycast authentication and Nostr signing |
+| [divine-signer](https://github.com/divinevideo/divine-signer) | — | Nostr event signing service |
+| [divine-blossom](https://github.com/divinevideo/divine-blossom) | Rust / Fastly Compute | Content-addressed media storage via the Blossom protocol ([media.divine.video](https://media.divine.video)) |
+| [divine-upload-server](https://github.com/divinevideo/divine-upload-server) | — | Resumable upload data plane for Divine's Blossom storage |
 | [divine-relay-sync](https://github.com/divinevideo/divine-relay-sync) | Rust | Sync Nostr events between relays using NIP-77 negentropy |
-| [funnel](https://github.com/divinevideo/funnel) | Rust | Analytics pipeline and REST API |
+| [divine-push-service](https://github.com/divinevideo/divine-push-service) | — | Push notifications for the mobile app |
+| [divine-badges](https://github.com/divinevideo/divine-badges) | Cloudflare Worker + D1 | Diviner of the Day/Week/Month — automated NIP-58 creator badges |
+| [divine-crosposter](https://github.com/divinevideo/divine-crosposter) | Cloudflare Worker | Opt-in crossposting of Divine videos to other platforms |
+| [divine-clips](https://github.com/divinevideo/divine-clips) | — | Clipping marketplace for distributing Divine videos across social platforms |
 
-### Trust & Safety
+### Keeping It Human (Trust & Safety)
 
 | Repository | Stack | Description |
 |------------|-------|-------------|
-| [divine-moderation-service](https://github.com/divinevideo/divine-moderation-service) | Cloudflare Worker | Human-in-the-loop content moderation — NSFW, violence, AI-generated, and deepfake detection via Hive.AI + Reality Defender |
+| [divine-moderation-service](https://github.com/divinevideo/divine-moderation-service) | Cloudflare Worker | Human-in-the-loop content moderation — NSFW, violence, AI-generated, and deepfake detection |
 | [divine-moderation-api](https://github.com/divinevideo/divine-moderation-api) | Cloudflare Worker | Public API for content moderation — queue producer + status checker |
 | [divine-realness](https://github.com/divinevideo/divine-realness) | — | Multi-provider deepfake detection for Nostr video events |
-| [osprey](https://github.com/divinevideo/osprey) | Rust | High-performance safety rules engine for real-time event processing at scale |
-| [social-media-age-rules-db](https://github.com/divinevideo/social-media-age-rules-db) | — | Global social media age regulations database with admin UI |
+| [osprey](https://github.com/divinevideo/osprey) | Rust | High-performance safety rules engine for real-time event processing |
+| [coop](https://github.com/divinevideo/coop) | — | Online safety dashboard — queues, routing, and enforcement rules |
+| [social-media-age-rules-db](https://github.com/divinevideo/social-media-age-rules-db) | — | Global social media age regulations database |
 
 ### Edge & Infrastructure
 
 | Repository | Stack | Description |
 |------------|-------|-------------|
-| [divine-cdn-worker](https://github.com/divinevideo/divine-cdn-worker) | Cloudflare Worker | Media CDN and Blossom server ([cdn.divine.video](https://cdn.divine.video)) |
 | [divine-router](https://github.com/divinevideo/divine-router) | Rust / Fastly Compute | Edge router for divine.video subdomains |
 | [divine-name-server](https://github.com/divinevideo/divine-name-server) | Cloudflare Worker | NIP-05 name server |
 | [divine-name-sync](https://github.com/divinevideo/divine-name-sync) | — | NIP-05 name synchronization |
 | [divine-rest-gateway](https://github.com/divinevideo/divine-rest-gateway) | Cloudflare Worker | REST API caching proxy for Nostr |
-| [divine-push-service](https://github.com/divinevideo/divine-push-service) | — | Push notification service for the mobile app |
 | [divine-identify-verification-service](https://github.com/divinevideo/divine-identify-verification-service) | Cloudflare Worker | Identity and verification service |
+| [divine-sky](https://github.com/divinevideo/divine-sky) | — | Divine sky services |
 | [divine-github-actions](https://github.com/divinevideo/divine-github-actions) | GitHub Actions | Reusable CI/CD workflows for Divine repositories |
 
 ### Libraries & SDKs
@@ -64,14 +71,13 @@ Divine brings back the magic of short-form looping video in a way that's:
 | [keycast_flutter_demo](https://github.com/divinevideo/keycast_flutter_demo) | Flutter / Dart | Keycast Flutter library and demo app for OAuth + PKCE + BYOK Nostr signing |
 | [c2pa-flutter](https://github.com/divinevideo/c2pa-flutter) | Flutter / Dart | Flutter wrapper for the official C2PA mobile SDKs |
 | [c2pa-rs](https://github.com/divinevideo/c2pa-rs) | Rust | Fork of the C2PA Rust SDK for content provenance and authenticity |
-| [media-kit](https://github.com/divinevideo/media-kit) | Flutter / Dart | Fork of cross-platform video & audio player for Flutter |
+| [media-kit](https://github.com/divinevideo/media-kit) | Flutter / Dart | Fork of the cross-platform video & audio player for Flutter |
 
-### Other
+### Brand
 
 | Repository | Description |
 |------------|-------------|
-| [divine-resurrection](https://github.com/divinevideo/divine-resurrection) | Legacy identity recovery for former Vine creators |
-| [brand-guidelines](https://github.com/divinevideo/brand-guidelines) | Brand DNA, tone of voice, and visual identity |
+| [brand-guidelines](https://github.com/divinevideo/brand-guidelines) | Divine brand DNA, tone of voice, and visual identity |
 
 ## How It Works
 
@@ -79,7 +85,7 @@ Divine brings back the magic of short-form looping video in a way that's:
 
 [Nostr](https://github.com/nostr-protocol/nostr) (Notes and Other Stuff Transmitted by Relays) is a simple, open protocol for decentralized social networking. Here's how Divine uses it:
 
-- **Identity**: Users have a cryptographic keypair. Your public key is your identity, and you sign all your content with your private key. No email, no phone number, no company owns your account.
+- **Identity**: You have a cryptographic keypair. Your public key is your identity, and you sign all your content with your private key. No email, no phone number, no company owns your account.
 
 - **Content**: Videos are published as Nostr events (kind 34236) containing metadata and links to the actual video files. These events are signed and can be verified by anyone.
 
@@ -100,17 +106,15 @@ This separation keeps Nostr relays fast while enabling rich media content.
 
 ### C2PA Content Credentials
 
-Divine integrates [C2PA](https://c2pa.org/) (Coalition for Content Provenance and Authenticity) to provide content provenance and authenticity verification. This helps users understand the origin of media and detect AI-generated or manipulated content.
+Divine integrates [C2PA](https://c2pa.org/) (Coalition for Content Provenance and Authenticity) to verify where media comes from — one of the tools we use to detect AI-generated and manipulated content and keep the playground human.
 
 ### Keycast (Authentication & Signing)
 
-[Keycast](https://github.com/divinevideo/keycast) provides OAuth 2.0 authentication with NIP-46 remote signing, allowing users to log in and sign Nostr events without exposing their private keys. It issues UCAN tokens for cross-service authorization.
+[Keycast](https://github.com/divinevideo/keycast) provides OAuth 2.0 authentication with NIP-46 remote signing, so you can log in and sign Nostr events without ever exposing your private keys. It issues UCAN tokens for cross-service authorization.
 
 ## Contributing
 
-We welcome contributions! Whether you're fixing bugs, adding features, or improving documentation, we'd love your help.
-
-### Getting Started
+We're building this together, and we'd love your help — bug fixes, features, docs, or just telling us what's broken.
 
 1. **Find an issue** — Check the issues tab in any repository, or open a new one
 2. **Fork & clone** — Fork the repo and clone it locally
@@ -135,7 +139,7 @@ flutter pub get
 flutter run
 ```
 
-**Rust services** (keycast, divine-funnelcake, divine-blossom, etc.):
+**Rust services** (keycast, divine-blossom, etc.):
 ```bash
 git clone https://github.com/divinevideo/<repo-name>
 cd <repo-name>
@@ -145,6 +149,7 @@ cargo build
 ### Community
 
 - **Nostr**: Follow us on Nostr for updates
+- **Web**: [divine.video](https://divine.video)
 
 ## License
 
@@ -152,4 +157,4 @@ All Divine repositories are open source. Check individual repositories for speci
 
 ---
 
-*Divine is part of the broader movement to build a more open, decentralized internet. We believe social media should be a protocol, not a platform.*
+*Creative power belongs in human hands. Divine is part of the broader movement to build a more open, decentralized internet — we believe social media should be a protocol, not a platform.*
