@@ -4,7 +4,7 @@
 
 Divine is bringing back the six-second videos that shaped internet culture — on a new protocol where creators own what they make and everyone has more say over their feeds. It's your playground for human creativity and connection, in all its weird, wonderful, technicolor glory.
 
-We've brought 100,000+ Vines back to life from the original archives, and we're building the place where the next ones get made. No algorithms deciding what you see. No AI slop. Just quick bursts of real human creativity.
+We've brought 2.1 million Vines back to life from the original archives, and we're building the place where the next ones get made. No algorithms deciding what you see. No AI slop. Just quick bursts of real human creativity.
 
 ## What We Stand For
 
