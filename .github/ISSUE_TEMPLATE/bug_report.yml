@@ -6,6 +6,8 @@ body:
   - type: markdown
     attributes:
       value: |
+        Titles use Conventional Commit format: `type(scope): summary`. Allowed types are `feat`, `fix`, `chore`, `docs`, `refactor`, `test`, `perf`, `build`, `ci`, `style`, `revert`, plus `task` for work to be done and `epic` for a tracking issue. Prefer a scope over a new type - `fix(security):`, not `security:`.
+
         Use generic descriptors instead of partner, customer, or brand names in public issue titles, bodies, and screenshots unless a maintainer explicitly approves naming them.
   - type: textarea
     id: summary
