@@ -1,0 +1,27 @@
+name: Task
+description: A unit of work to be done
+title: "task: "
+labels: [task]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use `task` when work needs doing and no code has changed yet - the eventual fix may not be a `fix`. Use `epic` instead for a tracking issue whose content is its child issues.
+
+        Titles use Conventional Commit format: `type(scope): summary`. Allowed types are `feat`, `fix`, `chore`, `docs`, `refactor`, `test`, `perf`, `build`, `ci`, `style`, `revert`, plus `task` for work to be done and `epic` for a tracking issue. Prefer a scope over a new type - `fix(security):`, not `security:`.
+
+        Use generic descriptors instead of partner, customer, or brand names in public issue titles, bodies, and screenshots unless a maintainer explicitly approves naming them.
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What needs to happen, and what it gets someone.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Why this is needed now. Link related issues or pull requests.
+    validations:
+      required: false
