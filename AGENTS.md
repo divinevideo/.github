@@ -10,7 +10,7 @@
 - Prefer a scope over inventing a type: `fix(security):`, not `security:`.
 - Set the correct title when opening the PR or filing the issue. Do not rely on fixing it afterward.
 - `gh issue create --title` bypasses the issue templates, so the type prefix they seed never fires. Supply it yourself; nothing rejects a malformed issue title.
-- A green `Semantic PR` check is not by itself proof a title was validated. Confirm the step ran, not just that the job passed. See "The title check is not a safety net" in `divine-context/PR_REVIEW.md`.
+- Repositories with a `Semantic PR` workflow validate the *format* of a pull-request title, and as of 2026-09-03 all of them execute that validation. A green job is still only evidence when its validation step actually ran, and no check anywhere decides whether a summary means anything to a reader — issues have no check at all. Read every title yourself. See "The title check is not a safety net" in `divine-context/PR_REVIEW.md`.
 - Keep PRs tightly scoped. Do not mix unrelated cleanup or speculative copy changes into the same PR.
 - PR descriptions must include a short summary, motivation, linked issue, and manual review notes.
 - Temporary or transitional content must include `TODO(#issue):` with the tracking issue for removal.
