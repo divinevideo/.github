@@ -71,7 +71,6 @@ Everything below is open source and open to contributions.
 | [keycast_flutter_demo](https://github.com/divinevideo/keycast_flutter_demo) | Flutter / Dart | Keycast Flutter library and demo app for OAuth + PKCE + BYOK Nostr signing |
 | [c2pa-flutter](https://github.com/divinevideo/c2pa-flutter) | Flutter / Dart | Flutter wrapper for the official C2PA mobile SDKs |
 | [c2pa-rs](https://github.com/divinevideo/c2pa-rs) | Rust | Fork of the C2PA Rust SDK for content provenance and authenticity |
-| [media-kit](https://github.com/divinevideo/media-kit) | Flutter / Dart | Fork of the cross-platform video & audio player for Flutter |
 
 ### Brand
 
